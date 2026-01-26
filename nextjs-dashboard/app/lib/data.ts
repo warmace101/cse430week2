@@ -48,7 +48,7 @@ export async function fetchLatestInvoices() {
       take: 5,
     });
 
-    const latestInvoices = data.map((invoice) => ({
+    const latestInvoices = data.map((invoice: any) => ({
       id: invoice.id,
       amount: formatCurrency(invoice.amount),
       name: invoice.customer.name,
@@ -176,7 +176,7 @@ export async function fetchFilteredInvoices(
     });
 
     // Flatten the structure to match the expected InvoicesTable type
-    return invoices.map((invoice) => ({
+    return invoices.map((invoice: any) => ({
       id: invoice.id,
       amount: invoice.amount,
       date: invoice.date,
@@ -326,14 +326,14 @@ export async function fetchFilteredCustomers(query: string) {
     });
 
     // Process the data to match the expected CustomersTableType format
-    const processedCustomers = customers.map((customer) => {
+    const processedCustomers = customers.map((customer: any) => {
       const totalInvoices = customer.invoices.length;
       const totalPending = customer.invoices
-        .filter((invoice) => invoice.status === "pending")
-        .reduce((sum, invoice) => sum + invoice.amount, 0);
+        .filter((invoice: any) => invoice.status === "pending")
+        .reduce((sum: number, invoice: any) => sum + invoice.amount, 0);
       const totalPaid = customer.invoices
-        .filter((invoice) => invoice.status === "paid")
-        .reduce((sum, invoice) => sum + invoice.amount, 0);
+        .filter((invoice: any) => invoice.status === "paid")
+        .reduce((sum: number, invoice: any) => sum + invoice.amount, 0);
 
       return {
         id: customer.id,
