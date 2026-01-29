@@ -3,11 +3,12 @@ import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
-import postgres from 'postgres';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
-async function getUser(email: string): Promise<User | undefined> {
+// Function to get user from database - only used in API routes
+export async function getUser(email: string): Promise<User | undefined> {
+  const postgres = require('postgres');
+  const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+  
   try {
     const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
     return user[0];
@@ -36,6 +37,7 @@ export const authConfig = {
   },
   providers: [
     Credentials({
+      name: 'credentials',
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
@@ -51,7 +53,13 @@ export const authConfig = {
           if (!user) return null;
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
-          if (passwordsMatch) return user;
+          if (passwordsMatch) {
+            return {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+            };
+          }
         }
 
         console.log('Invalid credentials');
