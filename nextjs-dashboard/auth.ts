@@ -3,4 +3,7 @@ import { authConfig } from './auth.config';
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
+  session: {
+    strategy: 'jwt',
+  },
 });
