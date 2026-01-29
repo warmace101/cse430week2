@@ -262,6 +262,8 @@ export async function fetchInvoiceById(id: string) {
       ...invoice,
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
+      // Ensure status is properly typed
+      status: invoice.status as 'pending' | 'paid',
     };
   } catch (error) {
     console.error("Database Error:", error);

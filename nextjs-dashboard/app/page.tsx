@@ -4,11 +4,8 @@ import Link from "next/link";
 import styles from "@/app/ui/home.module.css";
 import { lusitana } from "@/app/ui/fonts";
 import Image from "next/image";
-import { fetchRevenue } from "@/app/lib/data";
-import RevenueChart from "./ui/dashboard/revenue-chart";
 
-export default async function Page() {
-  const revenue = await fetchRevenue();
+export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className={styles.shape}></div>
@@ -35,36 +32,21 @@ export default async function Page() {
           </Link>
         </div>
         <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
-          {/* Add Hero Images Here */}
           <Image
-              src="/hero-desktop.png"
-              width={1000}
-              height={760}
-              className="hidden md:block"
-              alt="screenshots of the dashboard project showing desktop version"
-              />
-            <Image
-              src="/hero-mobile.png"
-              width={560}
-              height={620}
-              className="block md:hidden"
-              alt="screenshots of the dashboard in the mobile view"
-              />
+            src="/hero-desktop.png"
+            width={1000}
+            height={760}
+            className="hidden md:block"
+            alt="Screenshots of the dashboard project showing desktop version"
+          />
+          <Image
+            src="/hero-mobile.png"
+            width={560}
+            height={620}
+            className="block md:hidden"
+            alt="Screenshots of the dashboard in the mobile view"
+          />
         </div>
-      </div>
-       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}
-        {/* <Card title="Pending" value={totalPendingInvoices} type="pending" /> */}
-        {/* <Card title="Total Invoices" value={numberOfInvoices} type="invoices" /> */}
-        {/* <Card
-          title="Total Customers"
-          value={numberOfCustomers}
-          type="customers"
-        /> */}
-      </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        { <RevenueChart revenue={revenue}  /> }
-        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
       </div>
     </main>
   );

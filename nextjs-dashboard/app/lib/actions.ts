@@ -58,10 +58,10 @@ export async function createInvoice(prevState: State, formData: FormData) {
   try {
     await prisma.invoice.create({
       data: {
-        customerId,
+        customer_id: customerId,
         amount: amountInCents,
         status,
-        date,
+        date: new Date(date),
       },
     });
   } catch (error) {
@@ -101,7 +101,7 @@ export async function updateInvoice(
     await prisma.invoice.update({
       where: { id },
       data: {
-        customerId,
+        customer_id: customerId,
         amount: amountInCents,
         status,
       },
