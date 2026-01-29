@@ -4,8 +4,11 @@ import Link from "next/link";
 import styles from "@/app/ui/home.module.css";
 import { lusitana } from "@/app/ui/fonts";
 import Image from "next/image";
+import { fetchRevenue } from "@/app/lib/data";
+import RevenueChart from "./ui/dashboard/revenue-chart";
 
-export default function Page() {
+export default async function Page() {
+  const revenue = await fetchRevenue();
   return (
     <main className="flex min-h-screen flex-col p-6">
       <div className={styles.shape}></div>
@@ -48,6 +51,20 @@ export default function Page() {
               alt="screenshots of the dashboard in the mobile view"
               />
         </div>
+      </div>
+       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {/* <Card title="Collected" value={totalPaidInvoices} type="collected" /> */}
+        {/* <Card title="Pending" value={totalPendingInvoices} type="pending" /> */}
+        {/* <Card title="Total Invoices" value={numberOfInvoices} type="invoices" /> */}
+        {/* <Card
+          title="Total Customers"
+          value={numberOfCustomers}
+          type="customers"
+        /> */}
+      </div>
+      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+        { <RevenueChart revenue={revenue}  /> }
+        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
       </div>
     </main>
   );
